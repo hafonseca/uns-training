@@ -51,7 +51,7 @@ Para simplificação, usamos apenas duas tabelas principais:
 3. **Carregue as tabelas no banco**:
 
    ```bash
-   docker exec -i <nome_do_container_postgres> psql -U postgres -d postgres < create_and_populate.sql
+   docker exec -i mba-db psql -U postgres -d postgres < create_and_populate.sql
    ```
 
 4. **Acesse o Grafana**:
