@@ -40,7 +40,7 @@ Para simplificação, usamos apenas duas tabelas principais:
    ```bash
    git clone git@github.com:hafonseca/uns-training.git
    cd uns-training
-````
+```
 
 2. **Suba os containers**:
 
