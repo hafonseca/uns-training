@@ -1,0 +1,64 @@
+services:
+  mba-db:
+    image: timescale/timescaledb:latest-pg14
+    container_name: mba-db
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: mba
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+    networks:
+      - mba-net
+
+  mba-dashboard:
+    image: grafana/grafana
+    container_name: mba-dashboard
+    restart: unless-stopped
+    volumes:
+      - grafana_data:/var/lib/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - mba-net
+
+  mba-collector:
+    image: nodered/node-red:4.0.1
+    container_name: mba-collector
+    restart: unless-stopped
+    volumes:
+      - nodered_data:/data
+    ports:
+      - "1880:1880"
+      - "1883:1883"
+      - "1885:1885"
+    networks:
+      - mba-net
+
+  mba-simulator:
+    image: mekatronik/line-sim-opcua
+    container_name: mba-simulator
+    restart: unless-stopped
+    ports:
+      - "4840:4840"
+    networks:
+      - mba-net
+
+volumes:
+  timescale_data:
+    name: mba_timescale_data
+    driver: local
+  grafana_data:
+    name: mba_grafana_data
+    driver: local
+  nodered_data:
+    name: mba_nodered_data
+    driver: local
+
+networks:
+  mba-net:
+    name: mba-net
+    driver: bridge
